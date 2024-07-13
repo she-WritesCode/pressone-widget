@@ -32,5 +32,5 @@
 })(jQuery);
 
 window.onload = function () {
-	PressOne.init("<?php echo esc_js($this->api_key); ?>", { element: "#pressone-call-widget" });
+	PressOne.init(ajax_object.press_one_api_key, { element: "#pressone-call-widget" });
 }

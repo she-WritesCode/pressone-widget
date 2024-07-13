@@ -56,9 +56,14 @@ class Pressone_Widget_Public
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->api_key = carbon_get_theme_option('pressone_api_key');
-		$this->show_on_all_pages = carbon_get_theme_option('pressone_show_on_all_pages');
+	}
 
+	private function load_carbon_fields()
+	{
+		if (function_exists('carbon_get_theme_option')) {
+			$this->api_key = carbon_get_theme_option('pressone_api_key');
+			$this->show_on_all_pages = carbon_get_theme_option('pressone_show_on_all_pages');
+		}
 	}
 
 	/**
@@ -81,6 +86,7 @@ class Pressone_Widget_Public
 		 * class.
 		 */
 
+		$this->load_carbon_fields();
 		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/pressone-widget-public.css', array(), $this->version, 'all');
 
 	}
@@ -105,16 +111,25 @@ class Pressone_Widget_Public
 		 * class.
 		 */
 
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pressone-widget-public.js', array('jquery'), $this->version, false);
+		$this->load_carbon_fields();
+
+		if (!$this->show_on_all_pages) {
+			return;
+		}
+
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pressone-widget-public.js', ['jquery'], $this->version, false);
+		wp_enqueue_script($this->plugin_name . '-pub-widget', plugin_dir_url(__FILE__) . 'https://web.pressone.africa/pub-widget.js', [], $this->version, false);
+
 		wp_localize_script($this->plugin_name, 'ajax_object', [
 			'ajax_url' => admin_url('admin-ajax.php'),
-			'press_one_api_key' => $this->api_key
+			'press_one_api_key' => $this->api_key,
 		]);
 
 	}
 
 	public function add_widget_container()
 	{
+		$this->load_carbon_fields();
 		if ($this->show_on_all_pages || has_shortcode(get_post()->post_content, 'pressone_widget')) {
 			do_shortcode('[pressone_widget]');
 		}

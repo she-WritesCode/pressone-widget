@@ -10,6 +10,9 @@
  * @subpackage Pressone_Widget/admin
  */
 
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -41,8 +44,8 @@ class Pressone_Widget_Admin
 	 */
 	private $version;
 
-	private $api_key;
-	private $show_on_all_pages;
+	// private $api_key;
+	// private $show_on_all_pages;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -56,8 +59,9 @@ class Pressone_Widget_Admin
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->api_key = carbon_get_theme_option('pressone_api_key');
-		$this->show_on_all_pages = carbon_get_theme_option('pressone_show_on_all_pages');
+
+		// $this->api_key = carbon_get_theme_option('pressone_api_key');
+		// $this->show_on_all_pages = carbon_get_theme_option('pressone_show_on_all_pages');
 
 	}
 

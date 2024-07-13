@@ -13,6 +13,7 @@
  * @subpackage Pressone_Widget/includes
  */
 
+
 /**
  * The core plugin class.
  *
@@ -127,6 +128,15 @@ class Pressone_Widget
 
 		$this->loader = new Pressone_Widget_Loader();
 
+		$this->loader->add_action('after_setup_theme', $this, 'load_carbon_fields');
+	}
+
+	/** Initialize Carbon Fields */
+
+	function load_carbon_fields()
+	{
+		require_once __DIR__ . '/../vendor/autoload.php';
+		\Carbon_Fields\Carbon_Fields::boot();
 	}
 
 	/**
