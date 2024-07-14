@@ -29,8 +29,7 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	$(window).load(function () {
+		PressOne.init(ajax_object.press_one_api_key, { element: "#pressone-call-widget" });
+	});
 })(jQuery);
-
-window.onload = function () {
-	PressOne.init(ajax_object.press_one_api_key, { element: "#pressone-call-widget" });
-}
